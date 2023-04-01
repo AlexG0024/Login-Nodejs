@@ -222,6 +222,20 @@ const update = (req, res) => {
         status: "error",
         message: "Error en la consulta de usuarios",
       })
+
+    let userIsset = false
+      users.forEach((user) => {
+        if (user && user._id != userIdentity.id) userIsset = true
+    })
+
+    if (userIsset) {
+      return res.status(200).send({
+        status: "success",
+        message: "El usuario ya existe",
+      })
+    }
+
+    
     // comprobar si es el usuario en el Json Web Token
     users.forEach((user) => {
       if (user && user._id != userIdentity.id) {
